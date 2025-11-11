@@ -1,14 +1,16 @@
 import React , {useState,useEffect} from "react"
-import NewElement from "./NewsElement"
+import NewsElement from "./NewsElement"
 import axios from "axios"
 
 //
 const  NewsCatalogue =()=>{
+	var topic 
+	topic = "politics"
 	const [articles,setArticles] = useState([])
 	    useEffect(() => {
 		// Correct: Declaring and initializing a const variable within useEffect
 		const fetchArticles = async () => {
-			const response = await axios.get(" https://newsdata.io/api/1/latest?apikey=pub_04a3c96580fb4e1099d0f51a68bc092a&q=pizza")
+			const response = await axios.get("https://newsdata.io/api/1/latest?apikey={API_KEY}&q={topic}&size=10")	
 			setArticles(response.data.results || [])
 			//print data
 			console.log(response)
@@ -19,7 +21,14 @@ const  NewsCatalogue =()=>{
 		<div>
 			{
 				articles.map(article=>{
-					return (<div>{article.article_id}</div>)
+					return (
+					<NewsElement
+						title={article.title}
+						description = {article.description}
+						url = {article.url}
+						urlToImage={article.urlToImage}
+					/>
+					)
 			})}
 		</div>
 	)
