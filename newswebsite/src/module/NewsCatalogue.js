@@ -6,11 +6,12 @@ import axios from "axios"
 const  NewsCatalogue =()=>{
 	var topic 
 	topic = "politics"
+	const API_KEY = process.env.REACT_APP_API_KEY
 	const [articles,setArticles] = useState([])
 	    useEffect(() => {
 		// Correct: Declaring and initializing a const variable within useEffect
 		const fetchArticles = async () => {
-			const response = await axios.get("https://newsdata.io/api/1/latest?apikey={API_KEY}&q={topic}&size=10")	
+			const response = await axios.get(`https://newsdata.io/api/1/latest?apikey=${API_KEY}&q=${topic}&size=10`)	
 			setArticles(response.data.results || [])
 			//print data
 			console.log(response)
